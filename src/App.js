@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import Box from './component/Box';
 
@@ -11,28 +12,78 @@ import Box from './component/Box';
 const choice = {
   rock: {
     name: 'Rock',
-    img: 'https://cdn-icons-png.flaticon.com/256/231/231640.png',
+    img: 'https://t3.ftcdn.net/jpg/02/93/71/22/360_F_293712283_EGPqlm1bxpH0ZnrngyjRBol9GnJm2ST7.jpg',
   },
-  scissor: {
+  scissors: {
     name: 'Scissors',
-    img: 'https://cdn-icons-png.flaticon.com/512/4892/4892290.png',
+    img: 'https://t4.ftcdn.net/jpg/02/55/26/63/360_F_255266320_plc5wjJmfpqqKLh0WnJyLmjc6jFE9vfo.jpg',
   },
   paper: {
     name: 'Paper',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDmeB0eLj13xkYiQAaZ9gKOtpaae0vNoXBVnWnC7RgwUdu7ULyhkmqRRG77naLXXu31qc&usqp=CAU',
+    img: 'https://www.collinsdictionary.com/images/full/paper_111691001.jpg',
   },
 };
+
 function App() {
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState('');
   const play = (userChoice) => {
-    console.log('선택됨', userChoice);
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
   };
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); //객체에 키값만 뽑아서 어레이로 만들어 주는 함수
+    console.log('item array', itemArray);
+    let randomItem = Math.floor(Math.random() * itemArray.length); //0부터 1 사이에 있는 값 랜덤 반환
+    console.log('random value', randomItem);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+
+  const judgement = (user, computer) => {
+    console.log('user', user, 'computer', computer);
+
+    //user == computer tie(비김)
+    //user == rock, computer == "scissors" user win
+    //user == rock, computer == "paper" user lose
+    //user == scissors, computer=="rock" user lose
+    //user == scissors, computer =="paper" user win
+    //user == paper, computer=="rock" user win
+    //user == paper, computer =="scissors" user lose
+
+    //user 값이 객체이기 때문에 if(user==computer) 이런 식으로 비교 못 함
+    // if (user.name == computer.name) {
+    //   return 'tie';
+    // } else if (user.name == 'Rock') {
+    //   if (computer.name == 'Scissors') {
+    //     return 'win';
+    //   } else {
+    //     return 'lose';
+    //   }
+    // }
+    // 이 코드 삼항연산식으로 바꾸기
+
+    if (user.name === computer.name) {
+      return 'tie';
+    } else if (user.name === 'Rock')
+      return computer.name === 'Scissors' ? 'win' : 'lose';
+    else if (user.name === 'Scissors')
+      return computer.name === 'paper' ? 'win' : 'lose';
+    else if (user.name === 'Paper')
+      return computer.name === 'Rock' ? 'win' : 'lose';
+  };
+
   return (
     <div>
       <div className="main">
-        <Box title="You" />
-        <Box title="Computer" />
+        <Box title="You" item={userSelect} result={result} />
+        <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="main">
+      <div className="userBtn">
         {/*play('scissors') 이런 식으로 해버리면 클릭도 안 했는데 함수를
         실행시켜버림. 콜백함수처럼 ()=>play('scissors')로 해 줘야 함!!*/}
         <button onClick={() => play('scissors')}>가위</button>
