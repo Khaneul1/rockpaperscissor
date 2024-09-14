@@ -83,7 +83,7 @@ function App() {
         <Box title="You" item={userSelect} result={result} />
         <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="userBtn">
+      <div className="main">
         {/*play('scissors') 이런 식으로 해버리면 클릭도 안 했는데 함수를
         실행시켜버림. 콜백함수처럼 ()=>play('scissors')로 해 줘야 함!!*/}
         <button onClick={() => play('scissors')}>가위</button>
