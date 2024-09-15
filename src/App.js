@@ -79,16 +79,25 @@ function App() {
 
   return (
     <div>
+      <div className="info-text">
+        <p>Mini Game</p>
+      </div>
       <div className="main">
         <Box title="You" item={userSelect} result={result} />
         <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="main">
+      <div className="Btn">
         {/*play('scissors') 이런 식으로 해버리면 클릭도 안 했는데 함수를
         실행시켜버림. 콜백함수처럼 ()=>play('scissors')로 해 줘야 함!!*/}
-        <button onClick={() => play('scissors')}>가위</button>
-        <button onClick={() => play('rock')}>바위</button>
-        <button onClick={() => play('paper')}>보</button>
+        <button className="userBtn" onClick={() => play('scissors')}>
+          가위
+        </button>
+        <button className="userBtn" onClick={() => play('rock')}>
+          바위
+        </button>
+        <button className="userBtn" onClick={() => play('paper')}>
+          보
+        </button>
       </div>
     </div>
   );
