@@ -24,6 +24,38 @@ const choice = {
   },
 };
 
+const judgement = (user, computer) => {
+  console.log('user', user, 'computer', computer);
+
+  //user == computer tie(비김)
+  //user == rock, computer == "scissors" user win
+  //user == rock, computer == "paper" user lose
+  //user == scissors, computer=="rock" user lose
+  //user == scissors, computer =="paper" user win
+  //user == paper, computer=="rock" user win
+  //user == paper, computer =="scissors" user lose
+
+  //user 값이 객체이기 때문에 if(user==computer) 이런 식으로 비교 못 함
+  // if (user.name == computer.name) {
+  //   return 'tie';
+  // } else if (user.name == 'Rock') {
+  //   if (computer.name == 'Scissors') {
+  //     return 'win';
+  //   } else {
+  //     return 'lose';
+  //   }
+  // }
+  // 이 코드 삼항연산식으로 바꾸기
+
+  if (user.name === computer.name) {
+    return 'tie';
+  } else if (user.name === 'Rock')
+    return computer.name === 'Scissors' ? 'win' : 'lose';
+  else if (user.name === 'Scissors')
+    return computer.name === 'paper' ? 'win' : 'lose';
+  else if (user.name === 'Paper')
+    return computer.name === 'Rock' ? 'win' : 'lose';
+};
 function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
@@ -44,39 +76,6 @@ function App() {
     return choice[final];
   };
 
-  const judgement = (user, computer) => {
-    console.log('user', user, 'computer', computer);
-
-    //user == computer tie(비김)
-    //user == rock, computer == "scissors" user win
-    //user == rock, computer == "paper" user lose
-    //user == scissors, computer=="rock" user lose
-    //user == scissors, computer =="paper" user win
-    //user == paper, computer=="rock" user win
-    //user == paper, computer =="scissors" user lose
-
-    //user 값이 객체이기 때문에 if(user==computer) 이런 식으로 비교 못 함
-    // if (user.name == computer.name) {
-    //   return 'tie';
-    // } else if (user.name == 'Rock') {
-    //   if (computer.name == 'Scissors') {
-    //     return 'win';
-    //   } else {
-    //     return 'lose';
-    //   }
-    // }
-    // 이 코드 삼항연산식으로 바꾸기
-
-    if (user.name === computer.name) {
-      return 'tie';
-    } else if (user.name === 'Rock')
-      return computer.name === 'Scissors' ? 'win' : 'lose';
-    else if (user.name === 'Scissors')
-      return computer.name === 'paper' ? 'win' : 'lose';
-    else if (user.name === 'Paper')
-      return computer.name === 'Rock' ? 'win' : 'lose';
-  };
-
   return (
     <div>
       <div className="info-text">
@@ -86,10 +85,10 @@ function App() {
         <Box title="You" item={userSelect} result={result} />
         <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="Btn">
+      {/* <div className="Btn">
         {/*play('scissors') 이런 식으로 해버리면 클릭도 안 했는데 함수를
         실행시켜버림. 콜백함수처럼 ()=>play('scissors')로 해 줘야 함!!*/}
-        <button className="userBtn" onClick={() => play('scissors')}>
+      {/* <button className="userBtn" onClick={() => play('scissors')}>
           가위
         </button>
         <button className="userBtn" onClick={() => play('rock')}>
@@ -98,7 +97,7 @@ function App() {
         <button className="userBtn" onClick={() => play('paper')}>
           보
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
